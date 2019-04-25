@@ -276,7 +276,11 @@ type PionSimulationLoggingFactory struct {
 
 func (f *PionSimulationLoggingFactory) NewLogger(scope string) pionlogging.LeveledLogger {
 	log := logrus.New()
-	log.SetLevel(logrus.ErrorLevel)
+	if scope == "ice" {
+		log.SetLevel(logrus.TraceLevel)
+	} else {
+		log.SetLevel(logrus.ErrorLevel)
+	}
 	return &LogrusLevelLogger{log: log, peerAlias: f.PeerAlias}
 }
 
